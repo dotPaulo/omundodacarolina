@@ -4,45 +4,6 @@ $headerPath = './include/header.php';
 $scrollbarPath = './../assets/include/scrollbar.php';
 require_once __DIR__ . '/../app/helpers/JwtHelper.php';
 
-if (!function_exists('validateToken') || !function_exists('isTokenExpired') || !function_exists('clearAuthCookies')) {
-    die('As funções do JWT não estão disponíveis');
-}
-
-function redirectToLogin() {
-    clearAuthCookies();
-    header("Location: ../login.php");
-    exit();
-}
-
-function redirectToUnauthorized() {
-    header("Location: ../unauthorized.php");
-    exit();
-}
-
-if (!isset($_COOKIE['jwt'])) {
-    redirectToLogin();
-}
-
-$jwt = $_COOKIE['jwt'];
-
-if (isTokenExpired($jwt, $key)) {
-    redirectToLogin();
-}
-
-$decoded = validateToken($jwt, $key);
-
-if (!$decoded) {
-    redirectToLogin();
-}
-
-$username = htmlspecialchars($decoded->username, ENT_QUOTES, 'UTF-8');
-$emailDecoded = htmlspecialchars($decoded->email, ENT_QUOTES, 'UTF-8');
-$role = htmlspecialchars($decoded->role, ENT_QUOTES, 'UTF-8');
-
-if ($role !== 'admin') {
-    redirectToUnauthorized();
-}
-
 // Autenticação do e-mail (exemplo real, usar variáveis seguras no futuro)
 $email = 'paul0.oliveir42308@gmail.com';
 $senha = 'nnbb janf kkba flmf';
@@ -75,6 +36,7 @@ $email_numbers = imap_search($inbox, 'ALL');
     <link rel="shortcut icon" type="image/png" href="./../assets/Imagens/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="./assets/CSS/dashboard.css" rel="stylesheet" />
+    <link href="./assets/CSS/modal.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 
@@ -95,13 +57,13 @@ $email_numbers = imap_search($inbox, 'ALL');
                 if ($email_numbers) {
                     $email_numbers = array_slice($email_numbers, -5); // últimos 5 e-mails
                     $modals = ''; // armazenar todos os modais
-                
+
                     foreach ($email_numbers as $index => $email_number) {
                         $overview = imap_fetch_overview($inbox, $email_number, 0);
                         $message = $overview[0];
                         $subject = decodeHeader($message->subject);
                         $structure = imap_fetchstructure($inbox, $email_number);
-                
+
                         $body = '';
                         if (isset($structure->parts) && count($structure->parts)) {
                             foreach ($structure->parts as $partNumber => $part) {
@@ -122,10 +84,17 @@ $email_numbers = imap_search($inbox, 'ALL');
                                 $body = imap_qprint($body);
                             }
                         }
-                
-                        $bodyPreview = substr(strip_tags($body), 0, 100) . '...';
+
+                        // Preservar o HTML e tornar os links clicáveis
+                        $body = preg_replace_callback('/(https?:\/\/[^\s]+)/', function($matches) {
+                            $url = htmlspecialchars($matches[1]);
+                            return '<a href="' . $url . '" target="_blank" style="color: #4184F3; text-decoration: underline;">' . $url . '</a>';
+                        }, $body);
+
+                        // Preview do corpo (100 primeiros caracteres)
+                        $bodyPreview = substr($body, 0, 100) . '...';
                         $modalId = "emailModal$index";
-                
+
                         // Card
                         echo '<div class="card mb-4">';
                         echo '<div class="card-header"><strong>' . htmlspecialchars($subject) . '</strong></div>';
@@ -136,12 +105,12 @@ $email_numbers = imap_search($inbox, 'ALL');
                         echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#' . $modalId . '">Ver mais</button>';
                         echo '</div>';
                         echo '</div>';
-                
+
                         // Modal
                         $modals .= '
                         <div class="modal fade" id="' . $modalId . '" tabindex="-1" aria-labelledby="' . $modalId . 'Label" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                                <div class="modal-content">
+                            <div class="modal-dialog modal-lg modal-dialog-custom"> <!-- Modal com a classe personalizada -->
+                                <div class="modal-content modal-content-custom"> <!-- Modal com o conteúdo personalizado -->
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="' . $modalId . 'Label">' . htmlspecialchars($subject) . '</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
@@ -150,16 +119,13 @@ $email_numbers = imap_search($inbox, 'ALL');
                                         <p><strong>De:</strong> ' . htmlspecialchars($message->from) . '</p>
                                         <p><strong>Data:</strong> ' . date('d/m/Y H:i:s', strtotime($message->date)) . '</p>
                                         <hr>
-                                        <div style="white-space: pre-wrap;">' . nl2br(htmlspecialchars($body)) . '</div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                        <div style="white-space: pre-wrap;">' . $body . '</div>
                                     </div>
                                 </div>
                             </div>
                         </div>';
                     }
-                
+
                     echo $modals; // imprime todos os modais ao final
                 } else {
                     echo '<div class="alert alert-info">Nenhuma mensagem encontrada.</div>';

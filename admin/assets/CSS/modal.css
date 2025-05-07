@@ -1,0 +1,54 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*!
+* Start Bootstrap - SB Admin v7.0.7 (https://startbootstrap.com/template/sb-admin)
+* Copyright 2013-2023 Start Bootstrap
+* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
+*/
+/*!
+ * Bootstrap  v5.2.3 (https://getbootstrap.com/)
+ * Copyright 2011-2022 The Bootstrap Authors
+ * Copyright 2011-2022 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+ */
+
+
+/* Modal ajustado para 65% da largura da tela */
+.modal-dialog-custom {
+    max-width: 65%; /* 65% da largura da tela */
+    width: 100%;    /* Modal ocupa 100% da largura disponível */
+}
+
+/* Conteúdo do modal ajustado */
+.modal-content-custom {
+    height: 80vh; /* 80% da altura da tela */
+    overflow: hidden; /* Impede que o conteúdo ultrapasse */
+}
+
+/* Corpo do modal com rolagem */
+.modal-body {
+    max-height: calc(80vh - 130px); /* Ajusta altura para a área de conteúdo, considerando o cabeçalho */
+    overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+    padding: 15px;
+    word-wrap: break-word; /* Quebra as palavras longas para evitar overflow */
+    word-break: break-word; /* Quebra palavras longas também */
+}
+
+.modal-body a {
+    word-wrap: break-word; /* Garante que os links grandes não ultrapassem o limite */
+    word-break: break-word; /* Quebra links longos em várias linhas, se necessário */
+    max-width: 100%; /* Não deixa o link ultrapassar a largura do modal */
+    display: inline-block; /* Exibe o link como um bloco de linha */
+    overflow-wrap: break-word; /* Garante que o conteúdo do link seja quebrado se necessário */
+}
+
+/* Estilo opcional para melhorar a aparência dos links */
+.modal-body a {
+    color: #007bff; /* Cor padrão de link */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+.modal-body a:hover {
+    text-decoration: underline; /* Sublinha o link ao passar o mouse */
+}
