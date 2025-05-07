@@ -47,6 +47,7 @@ if ($role !== 'admin') {
     redirectToUnauthorized();
 }
 
+
 header("X-Frame-Options: DENY");
 header("X-XSS-Protection: 1; mode=block");
 header("X-Content-Type-Options: nosniff");
@@ -62,7 +63,7 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Dashboard | omundodacarolina</title>
+    <title>Dashboard | O Mundo da Carolina</title>
     <link rel="shortcut icon" type="image/png" href="./../assets/Imagens/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="./assets/CSS/dashboard.css" rel="stylesheet" />

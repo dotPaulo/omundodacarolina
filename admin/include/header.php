@@ -4,20 +4,17 @@ $headerPath = './include/header.php';
 $scrollbarPath = './../assets/include/scrollbar.php';
 require_once __DIR__ . '/../../app/helpers/JwtHelper.php';
 
-
 $jwt = $_COOKIE['jwt'];
 
 $decoded = validateToken($jwt, $key);
 
 $user_id = htmlspecialchars($decoded->id, ENT_QUOTES, 'UTF-8');
 
-
 header("X-Frame-Options: DENY");
 header("X-XSS-Protection: 1; mode=block");
 header("X-Content-Type-Options: nosniff");
 header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
 header("Referrer-Policy: strict-origin-when-cross-origin");
-
 ?>
 
 <!DOCTYPE html>
@@ -110,6 +107,12 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                                 <a class="nav-link" href="Cutilizador.php">Registar Utilizador</a>
                             </nav>
                         </div>
+
+                        <div class="sb-sidenav-menu-heading">NOTIFICACOES</div> 
+                        <a class="nav-link" href="exibirMensagens.php"> <div class="sb-nav-link-icon"><i class="fas fa-bell" style="color: #fff"></i> 
+                        </div> 
+                            Mensagens 
+                        </a>
                     </div>
                 </div>
             </nav>
