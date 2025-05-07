@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
+.footer {
+    width: 100%;
+    min-height: 180px;
+    background-color: #FFB6C1;
+    color: #1f2937;
+    padding: 2rem 1rem;
+    margin-top: 150px;
+    z-index: 500;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-section {
+    flex: 1;
+    margin-bottom: 1rem;
+    min-width: 200px;
+}
+
+.footer-logo {
+    position: absolute;
+    height: auto;
+    width: 120px;
+}
+
+.footer-nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.footer-nav a {
+    color: #1f2937;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-nav a:hover {
+    color: #db2777;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.footer-social a {
+    color: #4b5563;
+    transition: color 0.3s;
+}
+
+.footer-social a:hover {
+    color: #db2777;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+}
+
+.footer-sponsors {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.footer-sponsors img {
+    height: 24px;
+    width: auto;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.footer-social a[href^="mailto:"] svg {
+    transition: stroke 1s ease;
+}
+
+.footer-social a[href^="mailto:"] svg.highlight {
+    stroke: white;
+    animation: pulse 1s infinite;
+}
+
+.email-highlight-message {
+    display: block;
+    margin-top: 5px;
+    color: white;
+    font-size: 14px;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.footer-social a[href^="mailto:"] svg.fade-out {
+    animation: fadeOutColor 1s forwards;
+}
+
+.email-highlight-message.fade-out {
+    animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOutColor {
+    from {
+        stroke: white;
+    }
+
+    to {
+        stroke: currentColor;
+    }
+
+    /* Assumes the original color is set by currentColor */
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .footer-logo {
+        display: none;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .footer-nav ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+}

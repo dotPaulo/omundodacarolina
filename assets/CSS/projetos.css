@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  top: 0;
+  left: 0;
+}
+
+
+.projeto-header {
+  display: flex;
+  justify-content: center;
+  margin: 60px 6% 40px 6%;
+}
+
+.projeto-header button {
+  color: #fff;
+  background-color: #EA4C89;
+  border-radius: 8px;
+  border-style: none;
+  cursor: pointer;
+  font-size: 13px;
+  height: 40px;
+  min-width: 100px;
+  transition: background-color 0.3s ease-in-out, color 300ms;
+}
+
+.projeto-header button:hover,
+.projeto-header button:focus {
+  background-color: #F082AC;
+}
+
+.projeto-area {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5%;
+  gap: 45px;
+}
+
+.projeto-box {
+  width: calc(33.333% - 30px);
+  max-width: 380px;
+  height: 280px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  box-shadow: 2px 3px 10px 2px #888888;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.projeto-box:hover {
+  transform: scale(1.05);
+  box-shadow: 3px 6px 10px 4px #888888;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+.projeto-imagem {
+  width: 100%;
+  height: 60%;
+}
+
+.projeto-imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px 15px 0 0;
+}
+
+.projeto-titulo,
+.projeto-antevisao {
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.projeto-titulo h2 {
+  font-size: 18px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.projeto-antevisao span {
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.navbar ul li a.projetos {
+  opacity: 100%;
+}
+
+.navbar ul li i {
+  display: none;
+}
+
+@media only screen and (max-width:900px) {
+  .projeto-box {
+    width: calc(100% - 30px);
+  }
+}

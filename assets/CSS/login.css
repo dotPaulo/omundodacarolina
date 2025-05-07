@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    list-style: none;
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/***********************************************************************************************/
+/* Slider */
+/***********************************************************************************************/
+
+.hero-slider {
+    max-width: auto;
+    max-width: 100vw;
+    height: 700px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-slider .hero-list {
+    position: absolute;
+    width: max-content;
+    height: 100%;
+    left: 0;
+    top: 0;
+    display: flex;
+    transition: 1s;
+}
+
+.hero-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.landing-hero {
+    z-index: 2;
+}
+
+.hero-text {
+    color: white;
+}
+
+.hero-text span {
+    font-size: 40px;
+}
+
+.hero-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 20px;
+    font-size: 30px;
+}
+
+.hero-btn1 {
+    color: #FFFFFF;
+    background-color: #EA4C89;
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    height: 40px;
+    min-width: 200px;
+    transition: background-color 0.3s ease-in-out, color 300ms;
+}
+
+.hero-btn1:hover,
+.hero-btn1:focus {
+    background-color: #F082AC;
+}
+
+
+.hero-slider .hero-list img {
+    width: 3000px;
+    max-width: 100vw;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(55%);
+}
+
+.hero-slider .hero-buttons button {
+    background-color: transparent;
+}
+
+.hero-slider .hero-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    color: #fff;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 3;
+}
+
+.hero-slider .hero-dots li {
+    list-style: none;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    margin: 10px;
+    border-radius: 20px;
+    transition: 0.5s;
+}
+
+.hero-slider .hero-dots li.active {
+    width: 30px;
+}
+
+/***********************************************************************************************/
+/* Login */
+/***********************************************************************************************/
+
+.login-section {
+    width: 850px;
+    padding: 20px;
+    backdrop-filter: blur(25px);
+    border-radius: 10px;
+    padding: 2.5rem 5rem 4em 6rem;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+    z-index: 20;
+}
+
+
+.login-form-container h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1.25em;
+    margin-top: 2px;
+
+}
+
+.input-group label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #42424242;
+    display: flex;
+    align-items: center;
+    cursor: text;
+    transition: .1s ease-out;
+
+}
+
+.input-group input {
+    border: 0;
+    border-bottom: 2px solid #dfdfdf;
+    outline: none;
+    border-radius: 10px;
+}
+
+.input-group input,
+label {
+    font-size: 1em;
+    width: 100%;
+    height: 55px;
+}
+
+.input-group:focus .input-group:valid {
+    border-bottom: 3px solid #42424242;
+}
+
+input:focus+label,
+input:valid+label {
+    color: #42424242;
+    font-size: .80em;
+    top: -18px;
+    pointer-events: none;
+    margin-left: 5px;
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    padding-right: 40px;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.password-container .input_field {
+    width: 100%;
+    padding-right: 40px;
+    margin-right: 10px;
+}
+
+.password-container i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background: #3498db;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out, color 300ms;
+}
+
+.submit-button:hover {
+    background: #2980b9;
+}
+
+.login-error {
+    color: red;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.invalid-feedback {
+    color: red;
+    font-weight: 500;
+    margin-bottom: 100px;
+    font-size: 18px;
+}
+
+.login-page .footer {
+    background-color: #fff;
+    margin-top: 0;
+}

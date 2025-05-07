@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: white;
+}
+
+.noticias-header {
+  display: flex;
+  justify-content: center;
+  margin: 60px 6% 40px 6%;
+}
+
+.noticias-header button {
+  color: #fff;
+  background-color: #EA4C89;
+  border-radius: 8px;
+  border-style: none;
+  cursor: pointer;
+  font-size: 13px;
+  height: 40px;
+  min-width: 100px;
+  transition: background-color 0.3s ease-in-out, color 300ms;
+}
+
+.noticias-header button:hover,
+.noticias-header button:focus {
+  background-color: #F082AC;
+}
+
+.noticias-area {
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 0 5% 0 5%;
+  gap: 70px;
+}
+
+.noticias-box {
+  width: calc(33.333% - 30px);
+  max-width: 380px;
+  height: 280px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
+  box-shadow: 2px 3px 10px 2px #888888;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.noticias-box:hover {
+  transform: scale(1.05);
+  box-shadow: 10px 5px 20px 10px #888888;
+  transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+
+.noticias-imagem {
+  width: 100%;
+  max-height: 60%;
+}
+
+.noticias-imagem img {
+  width: 100%;
+  max-height: 168px;
+  object-fit: cover;
+  border-radius: 15px 15px 0 0;
+}
+
+.noticias-titulo,
+.noticias-antevisao {
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.noticias-titulo h2 {
+  font-size: 18px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.noticias-antevisao span {
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.navbar ul li a.noticia {
+  opacity: 100%;
+}
+
+@media only screen and (max-width:900px) {
+  .noticias-box {
+    width: calc(100% - 30px);
+  }
+}
