@@ -144,15 +144,5 @@ function delete($table, $id)
     return $stmt->affected_rows > 0;
 }
 
-function decodeHeader($header) {
-    $decoded_header = imap_mime_header_decode($header);
-    $decoded_subject = '';
-    
-    foreach ($decoded_header as $part) {
-        $decoded_subject .= $part->text;
-    }
-    return $decoded_subject;
-}
-
 
 ?>

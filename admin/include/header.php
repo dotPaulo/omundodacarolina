@@ -17,6 +17,32 @@ header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
 header("Referrer-Policy: strict-origin-when-cross-origin");
 ?>
 
+<?php
+$email = '8goncaloalvesgomes@gmail.com';
+$senha = 'iauw rzza uodp bfxr';
+
+if (strpos($email, '@gmail.com') !== false) {
+    $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
+} elseif (strpos($email, '@outlook.com') !== false || strpos($email, '@hotmail.com') !== false) {
+    $hostname = '{outlook.office365.com:993/imap/ssl}INBOX';
+} else {
+    $hostname = false;
+}
+
+$unreadCount = 0;
+
+if ($hostname) {
+    $inbox = @imap_open($hostname, $email, $senha);
+    if ($inbox) {
+        $emails = imap_search($inbox, 'UNSEEN'); // Só os não lidos
+        if ($emails) {
+            $unreadCount = count($emails);
+        }
+        imap_close($inbox);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -108,11 +134,19 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                             </nav>
                         </div>
 
-                        <div class="sb-sidenav-menu-heading">NOTIFICACOES</div> 
-                        <a class="nav-link" href="exibirMensagens.php"> <div class="sb-nav-link-icon"><i class="fas fa-bell" style="color: #fff"></i> 
-                        </div> 
-                            Mensagens 
+                        <div class="sb-sidenav-menu-heading">NOTIFICAES</div>
+                        <a class="nav-link" href="exibirMensagens.php">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-bell" style="color: #fff"></i>
+                                <?php if ($unreadCount > 0): ?>
+                                    <span style="background:red; color:white; padding:2px 6px; border-radius:50%; font-size: 12px; position: relative; top: -10px; left: -5px;">
+                                        <?php echo $unreadCount; ?>
+                                    </span>
+                                <?php endif; ?>
+                            </div>
+                            Mensagens
                         </a>
+
                     </div>
                 </div>
             </nav>
