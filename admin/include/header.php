@@ -108,10 +108,15 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                             </nav>
                         </div>
 
-                        <div class="sb-sidenav-menu-heading">NOTIFICACOES</div> 
-                        <a class="nav-link" href="exibirMensagens.php"> <div class="sb-nav-link-icon"><i class="fas fa-bell" style="color: #fff"></i> 
-                        </div> 
-                            Mensagens 
+                        <div class="sb-sidenav-menu-heading">NOTIFICAÇÕES</div> 
+                        <a class="nav-link" href="exibirMensagens.php" style="position: relative;">
+                            <div class="sb-nav-link-icon">
+                                <i class="fas fa-bell" style="color: #fff"></i>
+                                <span id="notificacao-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger d-none" style="font-size: 0.75rem; width: 1.5rem; height: 1.5rem; display: flex; align-items: center; justify-content: center;">
+                                    0
+                                </span>
+                            </div> 
+                            Mensagens
                         </a>
                     </div>
                 </div>

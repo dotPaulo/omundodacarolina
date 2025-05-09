@@ -4,8 +4,7 @@ $headerPath = './include/header.php';
 $scrollbarPath = './../assets/include/scrollbar.php';
 require_once __DIR__ . '/../app/helpers/JwtHelper.php';
 
-// Autenticação do e-mail (exemplo real, usar variáveis seguras no futuro)
-$email = 'paul0.oliveir42308@gmail.com';
+$email = 'paul0.oliveir42308@gmail.com'; 
 $senha = 'nnbb janf kkba flmf';
 
 if (strpos($email, '@gmail.com') !== false) {
@@ -16,13 +15,23 @@ if (strpos($email, '@gmail.com') !== false) {
     die('Provedor de e-mail não suportado.');
 }
 
+// if para o email oficial .
+//$hostname = '{outlook.office365.com:993/imap/ssl}INBOX';
+//} elseif (strpos($email, '@omundodacarolina.pt') !== false) {
+//    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
+//} else {
+//    die('Provedor de e-mail não suportado.');
+//}
+
 $inbox = imap_open($hostname, $email, $senha);
 
 if (!$inbox) {
     die('Erro ao conectar ao e-mail: ' . imap_last_error());
 }
 
-$email_numbers = imap_search($inbox, 'ALL');
+$email_numbers = imap_search($inbox, 'UNSEEN');
+
+//$unread_count = $emails ? count($emails) : 0;
 ?>
 
 <!DOCTYPE html>
@@ -50,13 +59,12 @@ $email_numbers = imap_search($inbox, 'ALL');
                 <ol class="breadcrumb mb-4">
                     <li class="breadcrumb-item active">Mensagens</li>
                 </ol>
-
                 <?php
-                $email_numbers = imap_search($inbox, 'ALL');
+                $email_numbers = imap_search($inbox, 'UNSEEN');
 
                 if ($email_numbers) {
-                    $email_numbers = array_slice($email_numbers, -5); // últimos 5 e-mails
-                    $modals = ''; // armazenar todos os modais
+                    $email_numbers = array_slice($email_numbers, -5); 
+                    $modals = ''; 
 
                     foreach ($email_numbers as $index => $email_number) {
                         $overview = imap_fetch_overview($inbox, $email_number, 0);
@@ -85,7 +93,6 @@ $email_numbers = imap_search($inbox, 'ALL');
                             }
                         }
 
-                        // Preservar o HTML e tornar os links clicáveis
                         $body = preg_replace_callback('/(https?:\/\/[^\s]+)/', function($matches) {
                             $url = htmlspecialchars($matches[1]);
                             return '<a href="' . $url . '" target="_blank" style="color: #4184F3; text-decoration: underline;">' . $url . '</a>';
@@ -102,7 +109,7 @@ $email_numbers = imap_search($inbox, 'ALL');
                         echo '<p><strong>De:</strong> ' . htmlspecialchars($message->from) . '</p>';
                         echo '<p><strong>Data:</strong> ' . date('d/m/Y H:i:s', strtotime($message->date)) . '</p>';
                         echo '<p><strong>Resumo:</strong> ' . htmlspecialchars($bodyPreview) . '</p>';
-                        echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#' . $modalId . '">Ver mais</button>';
+                            echo '<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#' . $modalId . '">Ver mais</button>';
                         echo '</div>';
                         echo '</div>';
 
@@ -138,5 +145,5 @@ $email_numbers = imap_search($inbox, 'ALL');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="./assets/js/dashboard.js"></script>
 </body>
-
 </html>
+
