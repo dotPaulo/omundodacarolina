@@ -22,6 +22,7 @@ if (!$inbox) {
     die('Erro ao conectar ao e-mail: ' . imap_last_error());
 }
 
+
 // Função para decodificar o header (caso venha codificado)
 function decodeHeader($str) {
     $elements = imap_mime_header_decode($str);
