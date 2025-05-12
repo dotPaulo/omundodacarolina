@@ -176,7 +176,7 @@ $email_numbers = imap_search($inbox, 'UNSEEN');
                                         <div style="white-space: pre-wrap;">' . $body . '</div>
                                     </div>
                                     <div class="modal-footer">
-                                        <form method="post" action="delete_email.php" style="display:inline;">
+                                        <form method="post" action="#" style="display:inline;">
                                             <input type="hidden" name="email_number" value="' . $email_number . '">
                                             <button type="submit" class="btn btn-danger">Apagar</button>
                                         </form>
