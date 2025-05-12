@@ -4,8 +4,55 @@ $headerPath = './include/header.php';
 $scrollbarPath = './../assets/include/scrollbar.php';
 require_once __DIR__ . '/../app/helpers/JwtHelper.php';
 
+// if User
+if (!function_exists('validateToken') || !function_exists('isTokenExpired') || !function_exists('clearAuthCookies')) {
+    die('As funções do JWT não estão disponíveis');
+}
+
+$err_jwt = "";
+
+function redirectToLogin()
+{
+    clearAuthCookies();
+    header("Location: ../login.php");
+    exit();
+}
+
+function redirectToUnauthorized()
+{
+    header("Location: ../unauthorized.php");
+    exit();
+}
+
+if (!isset($_COOKIE['jwt'])) {
+    redirectToLogin();
+}
+
+$jwt = $_COOKIE['jwt'];
+
+if (isTokenExpired($jwt, $key)) {
+    redirectToLogin();
+}
+
+$decoded = validateToken($jwt, $key);
+
+if (!$decoded) {
+    redirectToLogin();
+}
+
+$username = htmlspecialchars($decoded->username, ENT_QUOTES, 'UTF-8');
+$email = htmlspecialchars($decoded->email, ENT_QUOTES, 'UTF-8');
+$role = htmlspecialchars($decoded->role, ENT_QUOTES, 'UTF-8');
+
+if ($role !== 'admin') {
+    redirectToUnauthorized();
+}
+
 $email = 'paul0.oliveir42308@gmail.com'; 
 $senha = 'nnbb janf kkba flmf';
+
+
+// if de email teste.
 
 if (strpos($email, '@gmail.com') !== false) {
     $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
@@ -15,7 +62,7 @@ if (strpos($email, '@gmail.com') !== false) {
     die('Provedor de e-mail não suportado.');
 }
 
-// if para o email oficial .
+// if para o email oficial.
 //$hostname = '{outlook.office365.com:993/imap/ssl}INBOX';
 //} elseif (strpos($email, '@omundodacarolina.pt') !== false) {
 //    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
@@ -60,7 +107,7 @@ $email_numbers = imap_search($inbox, 'UNSEEN');
                     <li class="breadcrumb-item active">Mensagens</li>
                 </ol>
                 <?php
-                $email_numbers = imap_search($inbox, 'UNSEEN');
+                $email_numbers = imap_search($inbox, 'ALL');
 
                 if ($email_numbers) {
                     $email_numbers = array_slice($email_numbers, -5); 
@@ -85,7 +132,7 @@ $email_numbers = imap_search($inbox, 'UNSEEN');
                                 }
                             }
                         } else {
-                            $body = imap_fetchbody($inbox, $email_number, 1);
+                            $body = imap_fetchbody($inbox, $email_number, FT_PEEK);
                             if ($structure->encoding == 3) {
                                 $body = imap_base64($body);
                             } elseif ($structure->encoding == 4) {
@@ -127,6 +174,22 @@ $email_numbers = imap_search($inbox, 'UNSEEN');
                                         <p><strong>Data:</strong> ' . date('d/m/Y H:i:s', strtotime($message->date)) . '</p>
                                         <hr>
                                         <div style="white-space: pre-wrap;">' . $body . '</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <form method="post" action="delete_email.php" style="display:inline;">
+                                            <input type="hidden" name="email_number" value="' . $email_number . '">
+                                            <button type="submit" class="btn btn-danger">Apagar</button>
+                                        </form>
+
+                                        <form method="post" action="forward_email.php" style="display:inline;">
+                                            <input type="hidden" name="email_number" value="' . $email_number . '">
+                                            <button type="submit" class="btn btn-secondary">Encaminhar</button>
+                                        </form>
+
+                                        <form method="post" action="reply_email.php" style="display:inline;">
+                                            <input type="hidden" name="email_number" value="' . $email_number . '">
+                                            <button type="submit" class="btn btn-success">Responder</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
