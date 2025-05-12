@@ -3,24 +3,37 @@ include('./app/users.php');
 $headerPath = './include/header.php';
 $scrollbarPath = './../assets/include/scrollbar.php';
 require_once __DIR__ . '/../app/helpers/JwtHelper.php';
-$email_number = $_POST['email_number'];
-$email = 'paul0.oliveir42308@gmail.com';
+
+$email_number = $_POST['email_number'] ?? null;
+$imap_email = 'paul0.oliveir42308@gmail.com';
 $senha = 'nnbb janf kkba flmf';
 $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
+$email_clean = '';
 
-$inbox = imap_open($hostname, $email, $senha) or die('Erro: ' . imap_last_error());
+if ($email_number !== null) {
+    $inbox = imap_open($hostname, $imap_email, $senha) or die('Erro: ' . imap_last_error());
 
-$overview = imap_fetch_overview($inbox, $email_number, 0)[0];
-$structure = imap_fetchstructure($inbox, $email_number);
-$body = imap_fetchbody($inbox, $email_number, 1, FT_PEEK);
+    $overview = imap_fetch_overview($inbox, $email_number, 0)[0];
+    $structure = imap_fetchstructure($inbox, $email_number);
+    $body = imap_fetchbody($inbox, $email_number, 1, FT_PEEK);
 
-if ($structure->encoding == 3) {
-    $body = imap_base64($body);
-} elseif ($structure->encoding == 4) {
-    $body = imap_qprint($body);
+    if ($structure->encoding == 3) {
+        $body = imap_base64($body);
+    } elseif ($structure->encoding == 4) {
+        $body = imap_qprint($body);
+    }
+
+    $raw_from = $overview->from;
+    $decoded = mb_decode_mimeheader($raw_from);
+
+    if (preg_match('/<(.+?)>/', $decoded, $matches)) {
+        $email_clean = $matches[1];
+    } else {
+        $email_clean = filter_var($decoded, FILTER_VALIDATE_EMAIL) ? $decoded : '';
+    }
+
+    imap_close($inbox);
 }
-
-imap_close($inbox);
 ?>
 
 <!DOCTYPE html>
@@ -35,30 +48,71 @@ imap_close($inbox);
     <link href="./assets/CSS/dashboard.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
-<body class="bg-light">
+<body class="sb-nav-fixed">
 <?php include $scrollbarPath; ?>
 <?php include $headerPath; ?>
-<div class="container mt-5">
-    <h3 class="mb-4">Responder E-mail</h3>
-    <form action="send_email.php" method="post">
-        <div class="mb-3">
-            <label class="form-label">Para:</label>
-            <input type="email" name="to" class="form-control" value="<?php echo htmlspecialchars($overview->from); ?>" required>
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Responder E-mail</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="mensagens.php">Mensagens</a></li>
+                <li class="breadcrumb-item active">Responder</li>
+            </ol>
+
+            <?php if (isset($_GET['status'])): ?>
+                <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const status = "<?php echo $_GET['status']; ?>";
+                        if (status === "success") {
+                            Swal.fire({
+                                icon: "success",
+                                title: "E-mail enviado com sucesso!",
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                        } else if (status === "error") {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Erro ao enviar o e-mail",
+                                text: "Verifique as configurações e tente novamente.",
+                                showConfirmButton: true
+                            });
+                        }
+                    });
+                </script>
+            <?php endif; ?>
+
+            <div class="card mb-4">
+                <div class="card-header"></i> Formulário de Resposta</div>
+                <div class="card-body">
+                    <form action="send_email.php" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Para:</label>
+                            <input type="email" name="to" class="form-control" value="<?php echo htmlspecialchars($email_clean); ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Assunto:</label>
+                            <input type="text" name="subject" class="form-control" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mensagem:</label>
+                            <textarea name="body" rows="10" class="form-control"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Enviar</button>
+                        <a href="mensagens.php" class="btn btn-secondary">Cancelar</a>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label class="form-label">Assunto:</label>
-            <input type="text" name="subject" class="form-control" value="Re: <?php echo htmlspecialchars($overview->subject); ?>" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Mensagem:</label>
-            <textarea name="body" rows="10" class="form-control"><?php echo "\n\n---------- Mensagem original ----------\n" . $body; ?></textarea>
-        </div>
-        <button type="submit" class="btn btn-success">Enviar</button>
-        <a href="mensagens.php" class="btn btn-secondary">Cancelar</a>
-    </form>
+    </main>
     <?php include('./include/footer.php'); ?>
 </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="./assets/js/dashboard.js"></script>
+
+<!-- JS scripts compatíveis com o dashboard -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="./assets/js/dashboard.js"></script>
 </body>
 </html>
