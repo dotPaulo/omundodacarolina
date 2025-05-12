@@ -181,11 +181,6 @@ $email_numbers = imap_search($inbox, 'UNSEEN');
                                             <button type="submit" class="btn btn-danger">Apagar</button>
                                         </form>
 
-                                        <form method="post" action="forward_email.php" style="display:inline;">
-                                            <input type="hidden" name="email_number" value="' . $email_number . '">
-                                            <button type="submit" class="btn btn-secondary">Encaminhar</button>
-                                        </form>
-
                                         <form method="post" action="reply_email.php" style="display:inline;">
                                             <input type="hidden" name="email_number" value="' . $email_number . '">
                                             <button type="submit" class="btn btn-success">Responder</button>
