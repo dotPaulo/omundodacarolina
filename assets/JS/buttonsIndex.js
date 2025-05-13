@@ -4,13 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
   if (contactArea) {
     contactArea.addEventListener("click", function (event) {
       event.preventDefault();
-      smoothScroll('footer', 4000, highlightEmailIcon);
+      smoothScroll('footer', 1500, highlightEmailIcon);
     });
   }
 
   // New event listener for "Ler mais" button
   document.getElementById('ReadMore').addEventListener('click', function () {
-    smoothScroll('projetos', 2000);
+    smoothScroll('projetos', 1000);
   });
 
   function smoothScroll(targetId, duration, callback) {
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         emailIcon.classList.remove('highlight', 'fade-out');
         messageElement.remove();
       }, 1000);
-    }, 4000);
+    }, 2000);
   }
 });
 
