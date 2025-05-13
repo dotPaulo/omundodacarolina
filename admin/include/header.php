@@ -105,6 +105,11 @@ if ($inbox) {
                             </div>
                             Dashboard
                         </a>
+                        <a class="nav-link" href="#.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt " style="color: #fff"></i>
+                            </div>
+                            Relatórios
+                        </a>
                         <div class="sb-sidenav-menu-heading">GESTÃO</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
