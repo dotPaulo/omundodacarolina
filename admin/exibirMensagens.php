@@ -1,79 +1,105 @@
 <?php
-include('./app/users.php');
-$headerPath = './include/header.php';
-$scrollbarPath = './../assets/include/scrollbar.php';
-require_once __DIR__ . '/../app/helpers/JwtHelper.php';
-
-if (!function_exists('validateToken') || !function_exists('isTokenExpired') || !function_exists('clearAuthCookies')) {
-    die('As funções do JWT não estão disponíveis');
-}
-
-function redirectToLogin() {
-    clearAuthCookies();
-    header("Location: ../login.php");
-    exit();
-}
-
-function redirectToUnauthorized() {
-    header("Location: ../unauthorized.php");
-    exit();
-}
-
-if (!isset($_COOKIE['jwt'])) {
-    redirectToLogin();
-}
-
-$jwt = $_COOKIE['jwt'];
-if (isTokenExpired($jwt, $key)) {
-    redirectToLogin();
-}
-
-$decoded = validateToken($jwt, $key);
-if (!$decoded) {
-    redirectToLogin();
-}
-
-$username = htmlspecialchars($decoded->username, ENT_QUOTES, 'UTF-8');
-$email = htmlspecialchars($decoded->email, ENT_QUOTES, 'UTF-8');
-$role = htmlspecialchars($decoded->role, ENT_QUOTES, 'UTF-8');
-
-if ($role !== 'admin') {
-    redirectToUnauthorized();
-}
-
-// emails de teste
-
-$email = 'paul0.oliveir42308@gmail.com';
-$senha = 'nnbb janf kkba flmf';
-
-if (strpos($email, '@gmail.com') !== false) {
-    $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
-} elseif (strpos($email, '@outlook.com') !== false || strpos($email, '@hotmail.com') !== false) {
-    $hostname = '{outlook.office365.com:993/imap/ssl}INBOX';
-} else {
-    die('Provedor de e-mail não suportado.');
-}
-
-// EMAIL FINAL
-//if (strpos($email, '@omundodacarolina.pt') !== false) {
-//    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
-//} else {
-//    die('Provedor de e-mail não suportado.');
-//}
-
-$inbox = imap_open($hostname, $email, $senha);
-if (!$inbox) {
-    die('Erro ao conectar ao e-mail: ' . imap_last_error());
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email_number'])) {
-    $emailToDelete = intval($_POST['email_number']);
-    if (imap_delete($inbox, $emailToDelete)) {
-        imap_expunge($inbox);
-        $deleteSuccess = true;
-    } else {
-        $deleteError = true;
+// Inclui arquivos essenciais com checagem de existência
+try {
+    if (!file_exists('./app/users.php') || !file_exists('./include/header.php') || !file_exists('./../assets/include/scrollbar.php')) {
+        throw new Exception('Arquivos de inclusão não encontrados.');
     }
+
+    include('./app/users.php');
+    $headerPath = './include/header.php';
+    $scrollbarPath = './../assets/include/scrollbar.php';
+
+    require_once __DIR__ . '/../app/helpers/JwtHelper.php';
+
+    // Verificação de funções essenciais do JWT
+    if (!function_exists('validateToken') || !function_exists('isTokenExpired') || !function_exists('clearAuthCookies')) {
+        throw new Exception('Funções essenciais de autenticação não estão disponíveis.');
+    }
+
+    // Funções de redirecionamento
+    function redirectToLogin() {
+        clearAuthCookies();
+        header("Location: ../login.php");
+        exit();
+    }
+
+    function redirectToUnauthorized() {
+        header("Location: ../unauthorized.php");
+        exit();
+    }
+
+    function redirectTo404() {
+        header("Location: ../404.php");
+        exit();
+    }
+
+    // Validação do token JWT
+    if (!isset($_COOKIE['jwt'])) {
+        redirectToLogin();
+    }
+
+    $jwt = $_COOKIE['jwt'];
+    if (!isset($key)) {
+        throw new Exception('Chave JWT não definida.');
+    }
+
+    if (isTokenExpired($jwt, $key)) {
+        redirectToLogin();
+    }
+
+    $decoded = validateToken($jwt, $key);
+    if (!$decoded) {
+        redirectToLogin();
+    }
+
+    $username = htmlspecialchars($decoded->username ?? '', ENT_QUOTES, 'UTF-8');
+    $email = htmlspecialchars($decoded->email ?? '', ENT_QUOTES, 'UTF-8');
+    $role = htmlspecialchars($decoded->role ?? '', ENT_QUOTES, 'UTF-8');
+
+    if ($role !== 'admin') {
+        redirectToUnauthorized();
+    }
+
+    // Simulação de credenciais para teste (substituir em produção)
+    $email = 'paul0.oliveir42308@gmail.com';
+    $senha = 'nnbb janf kkba flmf';
+
+    // Definição do hostname de acordo com o provedor de e-mail
+    if (strpos($email, '@gmail.com') !== false) {
+        $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
+    } elseif (strpos($email, '@outlook.com') !== false || strpos($email, '@hotmail.com') !== false) {
+        $hostname = '{outlook.office365.com:993/imap/ssl}INBOX';
+    } else {
+        throw new Exception('Provedor de e-mail não suportado.');
+    }
+
+    // EMAIL FINAL (INSIRA UM HOSTNAME DE EMAIL VÁLIDO, ESTE ESTÁ APENAS PARA DEMONSTRAÇÃO)
+    //if (strpos($email, '@omundodacarolina.pt') !== false) {
+    //    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
+    //} else {
+    //    die('Provedor de e-mail não suportado.');
+    //} 
+
+    // Conexão com o servidor de e-mail
+    $inbox = @imap_open($hostname, $email, $senha);
+    if (!$inbox) {
+        throw new Exception('Erro ao conectar ao e-mail: ' . imap_last_error());
+    }
+
+    // Deleção de e-mails (se for POST)
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email_number'])) {
+        $emailToDelete = intval($_POST['email_number']);
+        if (imap_delete($inbox, $emailToDelete)) {
+            imap_expunge($inbox);
+            $deleteSuccess = true;
+        } else {
+            $deleteError = true;
+        }
+    }
+} catch (Exception $e) {
+    // Redireciona para a página de erro em caso de qualquer exceção
+    error_log("Erro capturado: " . $e->getMessage());
+    redirectTo404();
 }
 ?>
 
