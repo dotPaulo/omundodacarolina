@@ -62,14 +62,14 @@ $mail = new PHPMailer(true);
 
 try {
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
+    $mail->Host = 'smtp.gmail.com'; // host tem que ser descoberto, dominio: mail.omundodacarolina.pt:993/imap/ssl}INBOX
     $mail->SMTPAuth = true;
-    $mail->Username = 'paul0.oliveir42308@gmail.com';  // Seu e-mail
-    $mail->Password = 'nnbb janf kkba flmf';           // App password
+    $mail->Username = 'paul0.oliveir42308@gmail.com'; 
+    $mail->Password = 'nnbb janf kkba flmf';           
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
 
-    $mail->setFrom('paul0.oliveir42308@gmail.com', 'Administrador');
+    $mail->setFrom('paul0.oliveir42308@gmail.com', 'O Mundo da Carolina');
     $mail->addAddress($to);
 
     $mail->Subject = $subject;

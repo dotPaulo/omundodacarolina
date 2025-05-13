@@ -7,8 +7,9 @@ require_once __DIR__ . '/../app/helpers/JwtHelper.php';
 $email_number = $_POST['email_number'] ?? null;
 $imap_email = 'paul0.oliveir42308@gmail.com';
 $senha = 'nnbb janf kkba flmf';
-$hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
+$hostname = '{imap.gmail.com:993/imap/ssl}INBOX'; // final: mail.omundodacarolina.pt:993/imap/ssl}INBOX
 $email_clean = '';
+
 
 if ($email_number !== null) {
     $inbox = imap_open($hostname, $imap_email, $senha) or die('Erro: ' . imap_last_error());

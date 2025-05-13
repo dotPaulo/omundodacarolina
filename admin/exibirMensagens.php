@@ -41,6 +41,8 @@ if ($role !== 'admin') {
     redirectToUnauthorized();
 }
 
+// emails de teste
+
 $email = 'paul0.oliveir42308@gmail.com';
 $senha = 'nnbb janf kkba flmf';
 
@@ -52,12 +54,18 @@ if (strpos($email, '@gmail.com') !== false) {
     die('Provedor de e-mail não suportado.');
 }
 
+// EMAIL FINAL
+//if (strpos($email, '@omundodacarolina.pt') !== false) {
+//    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
+//} else {
+//    die('Provedor de e-mail não suportado.');
+//}
+
 $inbox = imap_open($hostname, $email, $senha);
 if (!$inbox) {
     die('Erro ao conectar ao e-mail: ' . imap_last_error());
 }
 
-// 🔥 Lógica de deleção
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email_number'])) {
     $emailToDelete = intval($_POST['email_number']);
     if (imap_delete($inbox, $emailToDelete)) {
