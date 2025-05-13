@@ -165,14 +165,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email_number'])) {
                                         <hr>
                                         <div style="white-space: pre-wrap;">' . $body . '</div>
                                     </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger delete-email-btn" data-email="' . $email_number . '">Apagar</button>
-                                        <form id="delete-form-' . $email_number . '" method="post" action="" style="display:none;">
+                                    <div class="modal-footer d-flex justify-content-between align-items-center px-3" style="border-top: 1px solidrgb(0, 0, 0);">
+                                        <div>
+                                            <button type="button" class="btn btn-danger me-2 delete-email-btn" data-email="' . $email_number . '">Apagar</button>
+                                            <form id="delete-form-' . $email_number . '" method="post" action="" style="display:none;">
+                                                <input type="hidden" name="email_number" value="' . $email_number . '">
+                                            </form>
+                                        </div>
+                                        <form method="post" action="reply_email.php">
                                             <input type="hidden" name="email_number" value="' . $email_number . '">
-                                        </form>
-                                        <form method="post" action="reply_email.php" style="display:inline;">
-                                            <input type="hidden" name="email_number" value="' . $email_number . '">
-                                            <button type="submit" class="btn btn-success">Responder</button>
+                                            <button type="submit" class="btn btn-success ms-2">Responder</button>
                                         </form>
                                     </div>
                                 </div>
@@ -198,6 +200,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email_number'])) {
         </main>
         <?php include('./include/footer.php'); ?>
     </div>
+
+    <!-- JS HEADER -->
+    <script src="./assets/js/dashboard.js"></script>
 
     <!-- BOOTSTRAP -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
