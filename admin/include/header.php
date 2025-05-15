@@ -103,7 +103,7 @@ if ($inbox) {
                         <a class="nav-link" href="dashboard.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt " style="color: #fff"></i>
                             </div>
-                            Dashboard 1 
+                            Dashboard
                         </a>
                         <a class="nav-link" href="#.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt " style="color: #fff"></i>
