@@ -105,7 +105,7 @@ if ($inbox) {
                             </div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="#.php">
+                        <a class="nav-link" href="logs.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt " style="color: #fff"></i>
                             </div>
                             Relatórios
