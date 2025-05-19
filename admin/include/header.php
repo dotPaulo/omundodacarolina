@@ -15,32 +15,33 @@ header("X-XSS-Protection: 1; mode=block");
 header("X-Content-Type-Options: nosniff");
 header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
 header("Referrer-Policy: strict-origin-when-cross-origin");
-?>
 
-<?php
-$email = '8goncaloalvesgomes@gmail.com';
-$senha = 'iauw rzza uodp bfxr';
+$email = 'paul0.oliveir42308@gmail.com';
+$senha = 'nnbb janf kkba flmf';
 
 if (strpos($email, '@gmail.com') !== false) {
     $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
 } elseif (strpos($email, '@outlook.com') !== false || strpos($email, '@hotmail.com') !== false) {
     $hostname = '{outlook.office365.com:993/imap/ssl}INBOX';
 } else {
-    $hostname = false;
+    die('Provedor de e-mail não suportado.');
 }
 
+// EMAIL FINAL
+//if (strpos($email, '@omundodacarolina.pt') !== false) {
+//    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
+//} else {
+//    die('Provedor de e-mail não suportado.');
+//}
+
+$inbox = @imap_open($hostname, $email, $senha);
 $unreadCount = 0;
 
-if ($hostname) {
-    $inbox = @imap_open($hostname, $email, $senha);
-    if ($inbox) {
-        $emails = imap_search($inbox, 'UNSEEN'); // Só os não lidos
-        if ($emails) {
-            $unreadCount = count($emails);
-        }
-        imap_close($inbox);
-    }
+if ($inbox) {
+    $unreadEmails = imap_search($inbox, 'UNSEEN');
+    $unreadCount = $unreadEmails ? count($unreadEmails) : 0;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -104,6 +105,11 @@ if ($hostname) {
                             </div>
                             Dashboard
                         </a>
+                        <a class="nav-link" href="logs.php">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt " style="color: #fff"></i>
+                            </div>
+                            Relatórios
+                        </a>
                         <div class="sb-sidenav-menu-heading">GESTÃO</div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
                             data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -134,19 +140,26 @@ if ($hostname) {
                             </nav>
                         </div>
 
-                        <div class="sb-sidenav-menu-heading">NOTIFICAES</div>
-                        <a class="nav-link" href="exibirMensagens.php">
-                            <div class="sb-nav-link-icon">
-                                <i class="fas fa-bell" style="color: #fff"></i>
+                        <div class="sb-sidenav-menu-heading">NOTIFICAÇÕES</div>
+                        <a class="nav-link" href="exibirMensagens.php" style="position: relative;">
+                            <div class="sb-nav-link-icon" style="position: relative;">
+                                <i class="fas fa-bell" style="color: #fff; font-size: 1.25rem;"></i>
                                 <?php if ($unreadCount > 0): ?>
-                                    <span style="background:red; color:white; padding:2px 6px; border-radius:50%; font-size: 12px; position: relative; top: -10px; left: -5px;">
-                                        <?php echo $unreadCount; ?>
+                                    <span id="notificacao-badge"
+                                        class="position-absolute badge rounded-circle bg-danger d-flex justify-content-center align-items-center"
+                                        style="
+                                            top: -5px;
+                                            right: -10px;
+                                            font-size: 0.75rem;
+                                            width: 1.3rem;
+                                            height: 1.3rem;
+                                        ">
+                                        <?= $unreadCount ?>
                                     </span>
                                 <?php endif; ?>
                             </div>
                             Mensagens
                         </a>
-
                     </div>
                 </div>
             </nav>

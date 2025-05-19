@@ -77,7 +77,7 @@ function getUserIdFromJWT($token, $key)
 {
     $decoded = validateToken($token, $key);
     if ($decoded && isset($decoded->id)) {
-        return $decoded->username;
+        return $decoded->id;
     }
     return null;
 }

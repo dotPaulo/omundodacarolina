@@ -47,6 +47,30 @@ if ($role !== 'admin') {
     redirectToUnauthorized();
 }
 
+$email = 'paul0.oliveir42308@gmail.com';
+$senha = 'nnbb janf kkba flmf';
+
+if (strpos($email, '@gmail.com') !== false) {
+    $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
+} elseif (strpos($email, '@outlook.com') !== false || strpos($email, '@hotmail.com') !== false) {
+    $hostname = '{outlook.office365.com:993/imap/ssl}INBOX';
+} else {
+    die('Provedor de e-mail não suportado.');
+}
+
+// EMAIL FINAL
+//if (strpos($email, '@omundodacarolina.pt') !== false) {
+//    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
+//} else {
+//    die('Provedor de e-mail não suportado.');
+//}
+
+$emailCount = 0;
+$inbox = @imap_open($hostname, $email, $senha);
+if ($inbox) {
+    $emails = imap_search($inbox, 'ALL');
+    $emailCount = $emails ? count($emails) : 0;
+}
 
 header("X-Frame-Options: DENY");
 header("X-XSS-Protection: 1; mode=block");
@@ -124,6 +148,16 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                                 <h4 class="mb-3" style="margin-left: 15px;"><?php echo count($users); ?></h4>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
                                     <a class="small text-white stretched-link" href="Vutilizadores.php">Ver detalhes</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">Total de mensagens</div>
+                                <h4 class="mb-3" style="margin-left: 15px;"><?php echo $emailCount; ?></h4>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="exibirMensagens.php">Ver detalhes</a>
                                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                 </div>
                             </div>
