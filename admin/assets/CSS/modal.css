@@ -52,3 +52,16 @@
 .modal-body a:hover {
     text-decoration: underline; /* Sublinha o link ao passar o mouse */
 }
+
+.modal-button {
+
+    color: white;
+    background-color: #EA4C89;
+    border-radius: 8px;
+    border-style: none;
+    cursor: pointer;
+    font-size: 16px;
+    height: 40px;
+    min-width: 200px;
+    transition: background-color 0.3s ease-in-out, color 300ms;
+}

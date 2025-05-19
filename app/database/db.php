@@ -17,6 +17,21 @@ function handleError($con_or_stmt)
     exit;
 }
 
+function registrar_log($usuario, $acao, $tabela, $detalhes)
+{
+    global $con;
+    $sql = "INSERT INTO logs (user_id, acao, tabela) VALUES (?, ?, ?)";
+    $stmt = $con->prepare($sql);
+    if ($stmt === false) {
+        logError("Erro ao preparar log: " . $con->error);
+        return;
+    }
+    $stmt->bind_param("iss", $user_id, $acao, $tabela);
+    $stmt->execute();
+    $stmt->close();
+}
+
+
 function executeQuery($sql, $data)
 {
     global $con;
@@ -106,6 +121,7 @@ function create($table, $data)
     $stmt = executeQuery($sql, $values);
     if ($stmt) {
         return $stmt->insert_id;
+        registrar_log($user_id, 'INSERT', $table, $insertId, json_encode($data));
     } else {
         return false;
     }
@@ -129,6 +145,7 @@ function update($table, $id, $data)
     $sql .= " WHERE id=?";
     $data['id'] = $id;
     $stmt = executeQuery($sql, $data);
+    registrar_log($user_id, 'UPDATE', $table, $id, json_encode($data));
     return $stmt->affected_rows;
 }
 
@@ -141,18 +158,8 @@ function delete($table, $id)
         error_log("Delete query failed for table $table: " . $con->error);
         return false;
     }
+    registrar_log($user_id, 'DELETE', $table, $id, "Registro deletado");
     return $stmt->affected_rows > 0;
 }
-
-function decodeHeader($header) {
-    $decoded_header = imap_mime_header_decode($header);
-    $decoded_subject = '';
-    
-    foreach ($decoded_header as $part) {
-        $decoded_subject .= $part->text;
-    }
-    return $decoded_subject;
-}
-
 
 ?>
