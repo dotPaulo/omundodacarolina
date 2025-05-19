@@ -16,8 +16,8 @@ header("X-Content-Type-Options: nosniff");
 header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
 header("Referrer-Policy: strict-origin-when-cross-origin");
 
-$email = 'paul0.oliveir42308@gmail.com';
-$senha = 'nnbb janf kkba flmf';
+$email = '';
+$senha = '';
 
 if (strpos($email, '@gmail.com') !== false) {
     $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
