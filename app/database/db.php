@@ -1,24 +1,20 @@
 <?php
 
 require ('connection.php');
-include_once __DIR__ . '/../../admin/app/users.php';
-require_once __DIR__ . '/../helpers/JwtHelper.php';
-
-$token = $_COOKIE['token'] ?? null;
-
-// Obtenha a chave secreta do JWT
-$config = require __DIR__ . '/../helpers/JWTconfig.php';
-$key = $config['jwt_secret'];
-
-// Se o token existe, obtenha o ID do utilizador
-$user_id = $token ? getUserIdFromJWT($token, $key) : null;
-
 
 function logError($error)
 {
     $logPath = './error_log.txt';
     $errorMessage = "[" . date("Y-m-d H:i:s") . "] " . $error . "\n";
     file_put_contents($logPath, $errorMessage, FILE_APPEND);
+}
+
+function handleError($con_or_stmt)
+{
+    $error = htmlspecialchars($con_or_stmt->error);
+    logError($error);
+    header('Location: error_page.php');
+    exit;
 }
 
 function registrar_log($usuario, $acao, $tabela, $detalhes)
@@ -35,13 +31,6 @@ function registrar_log($usuario, $acao, $tabela, $detalhes)
     $stmt->close();
 }
 
-function handleError($con_or_stmt)
-{
-    $error = htmlspecialchars($con_or_stmt->error);
-    logError($error);
-    header('Location: error_page.php');
-    exit;
-}
 
 function executeQuery($sql, $data)
 {
@@ -113,7 +102,7 @@ function selectOne($table, $conditions = [])
 }
 
 
-function create($table, $data, $user_id = null)
+function create($table, $data)
 {
     global $con;
     $sql = "INSERT INTO $table SET ";
@@ -131,15 +120,14 @@ function create($table, $data, $user_id = null)
 
     $stmt = executeQuery($sql, $values);
     if ($stmt) {
-        $insertId = $stmt->insert_id;
+        return $stmt->insert_id;
         registrar_log($user_id, 'INSERT', $table, $insertId, json_encode($data));
-        return $insertId;
     } else {
         return false;
     }
 }
 
-function update($table, $id, $data, $user_id = null)
+function update($table, $id, $data)
 {
     global $con;
     $sql = "UPDATE $table SET ";
@@ -161,7 +149,7 @@ function update($table, $id, $data, $user_id = null)
     return $stmt->affected_rows;
 }
 
-function delete($table, $id,$user_id = null)
+function delete($table, $id)
 {
     global $con;
     $sql = "DELETE FROM " . $con->real_escape_string($table) . " WHERE id=?";
@@ -173,4 +161,5 @@ function delete($table, $id,$user_id = null)
     registrar_log($user_id, 'DELETE', $table, $id, "Registro deletado");
     return $stmt->affected_rows > 0;
 }
+
 ?>
