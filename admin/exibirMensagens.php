@@ -61,8 +61,8 @@ try {
     }
 
     // Simulação de credenciais para teste (substituir em produção)
-    $email = 'paul0.oliveir42308@gmail.com';
-    $senha = 'nnbb janf kkba flmf';
+    $email = '';
+    $senha = '';
 
     // Definição do hostname de acordo com o provedor de e-mail
     if (strpos($email, '@gmail.com') !== false) {

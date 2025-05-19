@@ -12,8 +12,8 @@ try {
 
     // Variáveis de e-mail (credenciais de teste)
     $email_number = $_POST['email_number'] ?? null;
-    $imap_email = 'paul0.oliveir42308@gmail.com';
-    $senha = 'nnbb janf kkba flmf';
+    $imap_email = '';
+    $senha = '';
     $hostname = '{imap.gmail.com:993/imap/ssl}INBOX'; // INSIRA O HOSTNAME VÁLIDO
 
     $email_clean = '';
