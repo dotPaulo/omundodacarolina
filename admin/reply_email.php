@@ -84,7 +84,7 @@ try {
         <div class="container-fluid px-4">
             <h1 class="mt-4">Responder E-mail</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a href="mensagens.php">Mensagens</a></li>
+                <li class="breadcrumb-item"><a href="exibirMensagens.php">Mensagens</a></li>
                 <li class="breadcrumb-item active">Responder</li>
             </ol>
 
@@ -129,7 +129,7 @@ try {
                             <textarea name="body" rows="10" class="form-control"></textarea>
                         </div>
                         <button type="submit" class="btn btn-success">Enviar</button>
-                        <a href="mensagens.php" class="btn btn-secondary">Cancelar</a>
+                        <a href="exibirMensagens.php" class="btn btn-secondary">Cancelar</a>
                     </form>
                 </div>
             </div>

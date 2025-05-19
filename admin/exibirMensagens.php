@@ -78,7 +78,7 @@ try {
     //    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
     //} else {
     //    die('Provedor de e-mail não suportado.');
-    //} 
+    //}
 
     // Conexão com o servidor de e-mail
     $inbox = @imap_open($hostname, $email, $senha);
