@@ -12,7 +12,7 @@ try {
 
     // Variáveis de e-mail (credenciais de teste)
     $email_number = $_POST['email_number'] ?? null;
-    $imap_email = '';
+    $imap_email = 'geral@omundodacarolina.pt';
     $senha = '';
     $hostname = '{imap.gmail.com:993/imap/ssl}INBOX'; // INSIRA O HOSTNAME VÁLIDO
 

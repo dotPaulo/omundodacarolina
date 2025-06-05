@@ -2,6 +2,7 @@
 $headerPath = './assets/include/header.php';
 $scrollbarPath = './assets/include/scrollbar.php';
 $showLogoutMessage = isset($_GET['logout']) && $_GET['logout'] === 'success';
+
 ?>
 
 <!DOCTYPE html>
@@ -108,9 +109,13 @@ $showLogoutMessage = isset($_GET['logout']) && $_GET['logout'] === 'success';
         require_once './app/controllers/users.php';
         $publicacoes = selectAll('publicacoes');
 
-        usort($publicacoes, fn($a, $b) => $b['id'] <=> $a['id']);
+        usort($publicacoes, function($a, $b) {
+            return $b['id'] <=> $a['id'];
+        });
 
-        $projetos = array_slice(array_filter($publicacoes, fn($item) => $item['public_type'] === 'projetos'), 0, 6);
+        $projetos = array_slice(array_filter($publicacoes, function($item) {
+            return $item['public_type'] === 'projetos';
+        }), 0, 6);
 
         foreach ($projetos as $p) {
           echo '<div class="projeto-box" onclick="location.href=\'publicacoes.php?id=' . $p['id'] . '\'">';

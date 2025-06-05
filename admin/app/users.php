@@ -76,7 +76,7 @@ if (isset($_POST['registo-btn'])) {
             header("location: Vutilizadores.php");
             exit();
         } else {
-            header("Location: /../../error_page.php");
+            header("Location: /error_page.php");
         }
     }
 }

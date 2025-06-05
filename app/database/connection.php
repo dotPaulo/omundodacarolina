@@ -3,22 +3,22 @@
 
 //DB INFO
 if (!defined('DB_SERVER')) {
-    define('DB_SERVER', 'localhost');
+    define('DB_SERVER', 'omundodacarolina.pt');
 }
 if (!defined('DB_USERNAME')) {
-    define('DB_USERNAME', 'root');
+    define('DB_USERNAME', 'omdcarol');
 }
 if (!defined('DB_PASSWORD')) {
-    define('DB_PASSWORD', '');
+    define('DB_PASSWORD', 'pah4xzf8foztvyxsgk@');
 }
 if (!defined('DB_NAME')) {
-    define('DB_NAME', 'omundodacarolina');
+    define('DB_NAME', 'omdcarol_omundodacarolinav2');
 }
-
 
 try {
    
     $con = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    mysqli_set_charset($con,"utf8");
 
     if ($con === false) {
       

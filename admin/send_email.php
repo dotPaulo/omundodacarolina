@@ -63,9 +63,9 @@ try {
     $mail = new PHPMailer(true);
 
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com'; // Ajustar se for usar domínio personalizado
+    $mail->Host = 'smtp.omundodacarolina.com'; // Ajustar se for usar domínio personalizado
     $mail->SMTPAuth = true;
-    $mail->Username = ''; // Ajustar email (exibirMensagens.php)
+    $mail->Username = 'geral@omundodacarolina.pt'; // Ajustar email (exibirMensagens.php)
     $mail->Password = ''; // Ajustar senha (exibirMensagens.php)
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;

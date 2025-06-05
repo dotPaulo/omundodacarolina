@@ -78,8 +78,8 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
                         <a class="user-menu" href="#"> <?php echo $username; ?><i style="margin-left: 15px;margin-right: 20px;"
                                 class="fa-solid fa-user fa-xl" style="color: #0000000;"></i></a>
                         <div class="dropdown-content">
-                            <a href="../omundodacarolina/admin/dashboard.php">Dashboard</a>
-                            <a href="../omundodacarolina/app/controllers/logout.php">Logout</a>
+                            <a href="./admin/dashboard.php">Dashboard</a>
+                            <a href="./app/controllers/logout.php">Logout</a>
                         </div>
                     </div>
                     <?php
