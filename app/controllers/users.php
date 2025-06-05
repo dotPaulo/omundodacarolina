@@ -68,7 +68,7 @@ if (isset($_POST['registo-btn'])) {
             header("location: login.php");
             exit();
         } else {
-            header("Location: /../error_page.php");
+            header("Location: /404.php");
         }
     }
 }
@@ -118,5 +118,8 @@ if (isset($_POST['login-btn'])) {
         }
     }
 }
+
+$GLOBALS['login_err'] = $login_err;
+$GLOBALS['email_err'] = $email_err;
 
 ?>

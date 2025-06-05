@@ -120,11 +120,12 @@ function create($table, $data)
 
     $stmt = executeQuery($sql, $values);
     if ($stmt) {
-        return $stmt->insert_id;
         registrar_log($user_id, 'INSERT', $table, $insertId, json_encode($data));
+        return $stmt->insert_id;
     } else {
         return false;
     }
+    
 }
 
 function update($table, $id, $data)

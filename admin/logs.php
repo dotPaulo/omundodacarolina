@@ -1,96 +1,79 @@
 <?php
-// Inclusão dos arquivos essenciais (ajuste os caminhos conforme seu projeto)
+include ('./app/users.php');
 $headerPath = './include/header.php';
 $scrollbarPath = './../assets/include/scrollbar.php';
 require_once __DIR__ . '/../app/helpers/JwtHelper.php';
-
-
-// Inclua aqui sua conexão com banco e autenticação, se houver
 require_once __DIR__ . '/../app/database/connection.php';
 
-// Verificação de funções essenciais do JWT
-    if (!function_exists('validateToken') || !function_exists('isTokenExpired') || !function_exists('clearAuthCookies')) {
-        throw new Exception('Funções essenciais de autenticação não estão disponíveis.');
-    }
+if (!function_exists('validateToken') || !function_exists('isTokenExpired') || !function_exists('clearAuthCookies')) {
+    die('As funções do JWT não estão disponíveis');
+}
 
-    // Funções de redirecionamento
-    function redirectToLogin() {
-        clearAuthCookies();
-        header("Location: ../login.php");
-        exit();
-    }
+$err_jwt = "";
 
-    function redirectToUnauthorized() {
-        header("Location: ../unauthorized.php");
-        exit();
-    }
+function redirectToLogin()
+{
+    clearAuthCookies();
+    header("Location: ../login.php");
+    exit();
+}
 
-    function redirectTo404() {
-        header("Location: ../404.php");
-        exit();
-    }
+function redirectToUnauthorized()
+{
+    header("Location: ../unauthorized.php");
+    exit();
+}
 
-    // Validação do token JWT
-    if (!isset($_COOKIE['jwt'])) {
-        redirectToLogin();
-    }
+if (!isset($_COOKIE['jwt'])) {
+    redirectToLogin();
+}
 
-    $jwt = $_COOKIE['jwt'];
-    if (!isset($key)) {
-        throw new Exception('Chave JWT não definida.');
-    }
+$jwt = $_COOKIE['jwt'];
 
-    if (isTokenExpired($jwt, $key)) {
-        redirectToLogin();
-    }
+if (isTokenExpired($jwt, $key)) {
+    redirectToLogin();
+}
 
-    $decoded = validateToken($jwt, $key);
-    if (!$decoded) {
-        redirectToLogin();
-    }
+$decoded = validateToken($jwt, $key);
 
-    $username = htmlspecialchars($decoded->username ?? '', ENT_QUOTES, 'UTF-8');
-    $email = htmlspecialchars($decoded->email ?? '', ENT_QUOTES, 'UTF-8');
-    $role = htmlspecialchars($decoded->role ?? '', ENT_QUOTES, 'UTF-8');
+if (!$decoded) {
+    redirectToLogin();
+}
 
-    if ($role !== 'admin') {
-        redirectToUnauthorized();
-    }
+$username = htmlspecialchars($decoded->username, ENT_QUOTES, 'UTF-8');
+$email = htmlspecialchars($decoded->email, ENT_QUOTES, 'UTF-8');
+$role = htmlspecialchars($decoded->role, ENT_QUOTES, 'UTF-8');
 
+if ($role !== 'admin') {
+    redirectToUnauthorized();
+}
 
 $sql = "SELECT logs.*, utilizadores.username AS nome_usuario
         FROM logs 
         LEFT JOIN utilizadores ON logs.user_id = utilizadores.id 
         ORDER BY logs.data_hora DESC";
 $result = $con->query($sql);
+
+header("X-Frame-Options: DENY");
+header("X-XSS-Protection: 1; mode=block");
+header("X-Content-Type-Options: nosniff");
+header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
+header("Referrer-Policy: strict-origin-when-cross-origin");
 ?>
 
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="utf-8" />
-    <title>Relatórios de Alterações | O Mundo da Carolina</title>
-    <link rel="shortcut icon" href="./../assets/Imagens/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Relátorios | O Mundo da Carolina</title>
+    <link rel="shortcut icon" type="image/png" href="./../assets/Imagens/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="./assets/CSS/dashboard.css" rel="stylesheet" />
-    <link href="./assets/CSS/modal.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <!-- Bootstrap CSS (mesmo do segundo site) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-    <style>
-        /* Você pode adicionar ajustes específicos aqui */
-        body.sb-nav-fixed {
-            padding-top: 56px; /* Altura da navbar fixa */
-        }
-        table {
-            font-size: 0.9rem;
-        }
-        .table thead th {
-            background-color: #f4f4f4;
-        }
-    </style>
+    <script src="./assets/JS/dashboard.js"></script>
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    
 </head>
 <body class="sb-nav-fixed">
     <?php include $scrollbarPath; ?>
@@ -118,7 +101,7 @@ $result = $con->query($sql);
                             <tbody>
                                 <?php while ($row = $result->fetch_assoc()): ?>
                                     <tr>
-                                        <td><?= htmlspecialchars($row['nome_usuario'] ?? 'Admin') ?></td>
+                                        <td><?= htmlspecialchars($row['utilizadores.username'] ?? 'Admin') ?></td>
                                         <td><?= htmlspecialchars($row['acao']) ?></td>
                                         <td><?= htmlspecialchars($row['tabela']) ?></td>
                                         <td><?= htmlspecialchars($row['data_hora']) ?></td>

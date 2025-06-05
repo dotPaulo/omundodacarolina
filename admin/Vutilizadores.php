@@ -95,8 +95,8 @@ header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
                                             <th>Nome</th>
                                             <th>Email</th>
                                             <th>Cargo</th>
-                                            <th>Editar</th>
                                             <th>Apagar</th>
+                                            <th>Editar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -111,7 +111,6 @@ header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
                                                 echo "<td>" . $user['username'] . "</td>";
                                                 echo "<td>" . $user['email'] . "</td>";
                                                 echo "<td>" . $user['role'] . "</td>";
-                                                echo "<td><a href='EditUtilizadores.php?id=" . $user['id'] . "' class='btn btn-info'>Editar</a></td>";
 
                                                 if ($user['id'] != $user_id) {
                                                     echo "<td>
@@ -121,7 +120,18 @@ header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
                                                             </form>
                                                             </td>";
                                                 } else {
-                                                    echo "<td><button type='disabled' class='btn btn-danger' name='delete-btn-utilizadores' disabled>Apagar</button> </td>"; // Or any other placeholder for the current user
+                                                    echo "<td><button type='disabled' class='btn btn-danger' name='delete-btn-utilizadores' disabled>Apagar</button> </td>"; 
+                                                }
+                                                
+                                               if ($user['id'] != $user_id) {
+                                                    echo "<td>
+                                                            <form action='EditUtilizadores.php' method='GET'>
+                                                                <input type='hidden' name='id' value='" . $user['id'] . "'>
+                                                                <button type='submit' class='btn btn-info' name='edit-btn'>Editar</button>
+                                                            </form>
+                                                          </td>";
+                                                } else {
+                                                    echo "<td><button type='button' class='btn btn-info' name='edit-btn-utilizadores' disabled>Editar</button></td>";
                                                 }
 
                                                 echo "</tr>";

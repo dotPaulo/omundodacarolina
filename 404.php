@@ -1,5 +1,5 @@
 <?php
-$headerPath = __DIR__ . './assets/include/header.php';
+$headerPath = __DIR__ . '/assets/include/header.php';
 ?>
 
 <!DOCTYPE html>

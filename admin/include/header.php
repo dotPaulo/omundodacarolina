@@ -16,23 +16,15 @@ header("X-Content-Type-Options: nosniff");
 header("Strict-Transport-Security: max-age=31536000; includeSubDomains");
 header("Referrer-Policy: strict-origin-when-cross-origin");
 
-$email = 'paul0.oliveir42308@gmail.com';
-$senha = 'nnbb janf kkba flmf';
+$email = 'geral@omundodacarolina.pt';
+$senha = '';
 
-if (strpos($email, '@gmail.com') !== false) {
-    $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
-} elseif (strpos($email, '@outlook.com') !== false || strpos($email, '@hotmail.com') !== false) {
-    $hostname = '{outlook.office365.com:993/imap/ssl}INBOX';
+// EMAIL FINAL
+if (strpos($email, '@omundodacarolina.pt') !== false) {
+    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
 } else {
     die('Provedor de e-mail não suportado.');
 }
-
-// EMAIL FINAL
-//if (strpos($email, '@omundodacarolina.pt') !== false) {
-//    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
-//} else {
-//    die('Provedor de e-mail não suportado.');
-//}
 
 $inbox = @imap_open($hostname, $email, $senha);
 $unreadCount = 0;
@@ -139,7 +131,8 @@ if ($inbox) {
                                 <a class="nav-link" href="Cutilizador.php">Registar Utilizador</a>
                             </nav>
                         </div>
-
+                        
+                        <!-- Mensagens
                         <div class="sb-sidenav-menu-heading">NOTIFICAÇÕES</div>
                         <a class="nav-link" href="exibirMensagens.php" style="position: relative;">
                             <div class="sb-nav-link-icon" style="position: relative;">
@@ -160,6 +153,7 @@ if ($inbox) {
                             </div>
                             Mensagens
                         </a>
+                        -->
                     </div>
                 </div>
             </nav>

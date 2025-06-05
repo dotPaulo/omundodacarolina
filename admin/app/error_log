@@ -1,0 +1,17 @@
+[03-Jun-2025 10:36:00 UTC] PHP Warning:  PHP Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+[03-Jun-2025 10:36:00 UTC] PHP Warning:  Undefined variable $user_id in /home/omdcarol/public_html/app/database/db.php on line 161
+[03-Jun-2025 10:38:41 UTC] PHP Warning:  PHP Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+[03-Jun-2025 10:39:17 UTC] PHP Warning:  PHP Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+[03-Jun-2025 10:39:17 UTC] PHP Warning:  Undefined variable $user_id in /home/omdcarol/public_html/app/database/db.php on line 161
+[03-Jun-2025 11:25:04 UTC] PHP Warning:  PHP Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+[03-Jun-2025 11:26:14 UTC] PHP Warning:  PHP Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+[03-Jun-2025 11:26:14 UTC] PHP Warning:  Undefined variable $user_id in /home/omdcarol/public_html/app/database/db.php on line 123
+[03-Jun-2025 11:26:14 UTC] PHP Warning:  Undefined variable $insertId in /home/omdcarol/public_html/app/database/db.php on line 123
+[03-Jun-2025 11:26:26 UTC] PHP Warning:  PHP Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+[03-Jun-2025 11:26:26 UTC] PHP Warning:  Undefined variable $user_id in /home/omdcarol/public_html/app/database/db.php on line 162
+[03-Jun-2025 11:26:29 UTC] PHP Warning:  PHP Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+[03-Jun-2025 11:26:29 UTC] PHP Warning:  Undefined variable $user_id in /home/omdcarol/public_html/app/database/db.php on line 162
+[05-Jun-2025 09:18:29 UTC] PHP Warning:  PHP Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+[05-Jun-2025 09:18:29 UTC] PHP Warning:  Undefined variable $user_id in /home/omdcarol/public_html/app/database/db.php on line 162
+[05-Jun-2025 09:19:16 UTC] PHP Warning:  PHP Startup: Invalid date.timezone value '', using 'UTC' instead in Unknown on line 0
+[05-Jun-2025 09:19:16 UTC] PHP Warning:  Undefined variable $user_id in /home/omdcarol/public_html/app/database/db.php on line 162

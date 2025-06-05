@@ -63,14 +63,14 @@ try {
     $mail = new PHPMailer(true);
 
     $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com'; // Ajustar se for usar domínio personalizado
+    $mail->Host = 'smtp.omundodacarolina.com'; // Ajustar se for usar domínio personalizado
     $mail->SMTPAuth = true;
-    $mail->Username = 'paul0.oliveir42308@gmail.com';
-    $mail->Password = 'nnbb janf kkba flmf';
+    $mail->Username = 'geral@omundodacarolina.pt'; // Ajustar email (exibirMensagens.php)
+    $mail->Password = ''; // Ajustar senha (exibirMensagens.php)
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
 
-    $mail->setFrom('paul0.oliveir42308@gmail.com', 'O Mundo da Carolina');
+    $mail->setFrom('Inserir email correto', 'O Mundo da Carolina (username do email)');
     $mail->addAddress($to);
 
     $mail->Subject = $subject;

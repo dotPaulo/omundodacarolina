@@ -1,9 +1,8 @@
 <?php
-
 $baseDir = __DIR__ . '/assets/include/';
 $headerPath = $baseDir . 'header.php';
 $scrollbarPath = $baseDir . 'scrollbar.php';
-include (__DIR__ . '/app/controllers/users.php');
+include __DIR__ . '/app/controllers/users.php';
 require_once __DIR__ . '/app/helpers/JwtHelper.php';
 
 if (isset($_COOKIE['jwt'])) {
@@ -37,7 +36,7 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 
 <head>
   <meta charset="UTF-8">
@@ -76,7 +75,7 @@ header("Referrer-Policy: strict-origin-when-cross-origin");
         </ul>
         <div class="login-section">
           <div class="login-form-container">
-            <h2>Iniciar Sessão</h2>
+            <h2>Iniciar Sessão<h2>
             <p class="login-error"> <?php echo $login_err; ?></p>
             <form action="login.php" method="POST">
               <div id="login-form">
