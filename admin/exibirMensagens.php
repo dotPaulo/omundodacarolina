@@ -63,13 +63,16 @@ try {
     // Simulação de credenciais para teste (substituir em produção)
     $email = 'geral@omundodacarolina.pt';
     $senha = '';
-     
-    if (strpos($email, '@omundodacarolina.pt') !== false) {
-        $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
+
+    // Definição do hostname de acordo com o provedor de e-mail
+    if (strpos($email, '@gmail.com') !== false) {
+        $hostname = '{imap.gmail.com:993/imap/ssl}INBOX';
+    } elseif (strpos($email, '@outlook.com') !== false || strpos($email, '@hotmail.com') !== false) {
+        $hostname = '{outlook.office365.com:993/imap/ssl}INBOX';
     } else {
         die('Provedor de e-mail não suportado.');
     }
-
+      
     // Conexão com o servidor de e-mail
     $inbox = @imap_open($hostname, $email, $senha);
     if (!$inbox) {

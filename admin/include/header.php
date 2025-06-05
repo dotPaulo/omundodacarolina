@@ -20,8 +20,8 @@ $email = 'geral@omundodacarolina.pt';
 $senha = '';
 
 // EMAIL FINAL
-if (strpos($email, '@omundodacarolina.pt') !== false) {
-    $hostname = '{mail.omundodacarolina.pt:993/imap/ssl}INBOX';
+if (strpos($email, '@gmail.pt') !== false) {
+    $hostname = '{mail.gmail:993/imap/ssl}INBOX';
 } else {
     die('Provedor de e-mail não suportado.');
 }

@@ -1,0 +1,1 @@
+[2025-05-19 16:35:43] Erro ao preparar log: Table 'omundodacarolina.logs' doesn't exist
